@@ -1,12 +1,14 @@
 import os
 import wget
 import time
+import csv
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import NoSuchElementException
 
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
@@ -30,9 +32,9 @@ username = login_form.find_element(By.NAME, "email")
 password = login_form.find_element(By.NAME, "password")
 
 username.clear()
-username.send_keys("email")
+username.send_keys("example@gmail.com")
 password.clear()
-password.send_keys("password")
+password.send_keys("example password")
 
 login_button = (
     WebDriverWait(driver, 2)
@@ -46,7 +48,7 @@ login_button = (
 
 # go to user's collections
 collections_link = (
-    WebDriverWait(driver, 5)
+    WebDriverWait(driver, 8)
     .until(EC.element_to_be_clickable((By.XPATH, "//a[@href='/collections']")))
     .click()
 )
@@ -72,7 +74,8 @@ reservation_collection = (
     .click()
 )
 
-# clicking on each page in collection to see if able to make yelp reservation
+# making a yelp reservation for each page
+reservation_data = []
 restaurants = driver.find_elements(By.CLASS_NAME, "biz-name")
 original_window = driver.current_window_handle
 wait = WebDriverWait(driver, 7)
@@ -104,23 +107,53 @@ for restaurant in restaurants:
                 )
             )
             for slot in time_slots:
-                print("slot:", slot.text)
-                button = slot.find_element(By.TAG_NAME, "button")
-                print("button", button.text)
-                if button.text == "7:00 pm":
-                    button.click()
-                else:
+                try:
+                    button = slot.find_element(By.TAG_NAME, "button")
+                    if not button.get_attribute("disabled"):
+                        button.click()
+                        break
+                except NoSuchElementException:
+                    print("no slot")
                     continue
             
             confirm_reservation = wait.until(
                     EC.element_to_be_clickable(
                         (
                             By.XPATH,
-                            "//span[contains(@class, css-1enow5j') and contains (text(), 'Confirm')]"
+                            "//button[contains(@type, 'submit') and contains (@class, 'css-12anb14')]"
                         )
                     )
             )
             confirm_reservation.click()
+
+            # reserved_name = wait.until(
+            #     EC.presence_of_element_located(
+            #         (
+            #             By.XPATH,
+            #             "//a[contains(@role, 'link') and contains (@class, 'businessTitleLink__09f24__yn6_N')]"
+            #         )
+            #     )
+            # )
+            # reserved_time = wait.until(
+            #     EC.presence_of_element_located(
+            #         (
+            #             By.XPATH,
+            #             "//span[contains(@class, 'reservationInfoText__09f24__K6yrO')]"
+            #         )
+            #     )
+            # )
+
+            # print(reservation_data, "data")
+
+            # print(reserved_name.text, "name", reserved_time.text(), "time")
+
+            driver.close()
+            driver.switch_to.window(original_window)
+
+            # reservation_data.append({
+            #     "Name": reserved_name.text,
+            #     "Time": reserved_time.text
+            # })
 
         except TimeoutException:
             print("Not here")
@@ -130,3 +163,6 @@ for restaurant in restaurants:
     except StaleElementReferenceException:
         print("Stale element")
         continue
+
+# for entry in reservation_data:
+#     print(entry["Name"], "name", entry["Time"], "time")
