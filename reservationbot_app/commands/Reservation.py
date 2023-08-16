@@ -14,37 +14,41 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from .constants import ROOT_URL
+
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 
 # defining the browser
 driver = webdriver.Chrome(options=chrome_options)
 
-# opening the webpage
-driver.get("https://www.yelp.com/login")
-
 # logging in
-login_form = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.ID, "ajax-login"))
-)
+def authenticate(driver):
+    driver.get(ROOT_URL)
 
-username = login_form.find_element(By.NAME, "email")
-password = login_form.find_element(By.NAME, "password")
-
-username.clear()
-username.send_keys("example@gmail.com")
-password.clear()
-password.send_keys("example password")
-
-login_button = (
-    WebDriverWait(driver, 2)
-    .until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, "button.ybtn.ybtn--primary.ybtn--big.submit.ybtn-full")
-        )
+    login_form = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "ajax-login"))
     )
-    .click()
-)
+
+    username = login_form.find_element(By.NAME, "email")
+    password = login_form.find_element(By.NAME, "password")
+
+    username.clear()
+    username.send_keys("example@gmail.com")
+    password.clear()
+    password.send_keys("example password")
+
+    # login_button = (
+    #     WebDriverWait(driver, 2)
+    #     .until(
+    #         EC.element_to_be_clickable(
+    #             (By.CSS_SELECTOR, "button.ybtn.ybtn--primary.ybtn--big.submit.ybtn-full")
+    #         )
+    #     )
+    #     .click()
+    # )
+    driver.find_element(By.CSS_SELECTOR, "button.ybtn.ybtn--primary.ybtn--big.submit.ybtn-full").click()
+    return driver
 
 # go to user's collections
 collections_link = (
