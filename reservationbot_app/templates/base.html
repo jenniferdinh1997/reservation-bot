@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +8,18 @@
     <title>Res Bot</title>
     <link
       rel="stylesheet"
+      type="text/css"
       href="{% static 'css/style.css' %}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@200&display=swap"
+      rel="stylesheet"
     />
   </head>
   <body>
@@ -24,6 +34,9 @@
         </div>
       </nav>
     </header>
-    <main class="container">{% block content %} {% endblock %}</main>
+    {% block content %} {% endblock %}
+    <footer class="footer-container">
+      <a href="https://github.com/jenniferdinh1997/reservation-bot" id="footer-github">Github</a>
+    </footer>
   </body>
 </html>

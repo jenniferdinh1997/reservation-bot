@@ -1,6 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+{% load static %}
 {% block content %}
 
-<h1>Home</h1>
+<div class="home-container">
+    <div id="home-main-section">
+        <img src="{% static 'img/home.jpg' %}" id="home-main-img"/>
+        <p>Your favorite restaurants without the wait</p>
+        <button id="home-main-button">Order Now</button>
+    </div>
+    <div class="home-main-icons">
+        <img src="{% static 'img/1.png' %}" id="home-main-icons_1"/>
+        <img src="{% static 'img/2.png' %}" id="home-main-icons_1"/>
+        <img src="{% static 'img/3.png' %}" id="home-main-icons_1"/>
+    </div>
+    <button id="home-main-button_2">Order Now</button>
+</div>
 
 {% endblock %}
