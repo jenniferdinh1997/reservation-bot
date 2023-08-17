@@ -21,16 +21,20 @@
       href="https://fonts.googleapis.com/css2?family=Lisu+Bosa:wght@200&display=swap"
       rel="stylesheet"
     />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" 
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
       <nav class="nav-container">
         <div class="nav-left">
-          <p>Res Bot</p>
+          <a href="{% url 'home' %}">Res Bot</a>
         </div>
         <div class="nav-right">
-          <p>About</p>
-          <p>Reservations</p>
+          <a>About</a>
+          <a href="{% url 'reserve' %}">Reservations</a>
         </div>
       </nav>
     </header>

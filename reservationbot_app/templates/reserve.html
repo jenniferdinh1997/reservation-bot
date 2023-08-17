@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
+
+<form method="post" class="reserve-form-container">
+  {% csrf_token %}
+  <h1>Reserve now!</h1>
+  <p>
+    Enter in your Yelp credentials and the name of the collection you want to
+    have automatic reservations for.
+  </p>
+  <div id="reserve-form-section">
+    <label>Email</label>
+    <input type="email" />
+  </div>
+  <div id="reserve-form-section">
+    <label>Password</label>
+    <input type="password" />
+  </div>
+  <div id="reserve-form-section">
+    <label>Collection Name</label>
+    <input type="text" />
+  </div>
+  <button type="submit" class="reserve-btn">Submit</button>
+</form>
+{% endblock %}

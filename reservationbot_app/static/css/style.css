@@ -17,17 +17,23 @@ body, html {
     font-family: 'Fjalla One', sans-serif;
 }
 
-.nav-left p {
+.nav-left a {
+    text-decoration: none;
     font-size: 30px;
     margin: 15px;
 }
 
-.nav-right p {
+.nav-right a {
+    text-decoration: none;
     margin: 15px;
     font-size: 25px;
 }
 
-.nav-left p:hover, .nav-right p:hover {
+.nav-right a:visited, .nav-left a:visited {
+    color: #f76c6c;
+}
+
+.nav-left a:hover, .nav-right a:hover {
     color: white;
 }
 
@@ -118,4 +124,53 @@ body, html {
 
 #footer-github:hover {
     color: white;
+}
+
+.reserve-form-container {
+    margin: 0 auto;
+    background-color: white;
+    width: 40%;
+    border-radius: 30px;
+    padding: 40px;
+}
+
+.reserve-form-container h1 {
+    text-align: center;
+    font-family: 'Fjalla One', sans-serif;
+    margin: 0;
+}
+
+.reserve-form-container p {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+#reserve-form-section {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
+}
+
+#reserve-form-section input {
+    line-height: 35px;
+    border-radius: 10px;
+    border: 1px solid #d5d5d5;
+}
+
+#reserve-form-section label {
+    font-family: 'Roboto', sans-serif;
+}
+
+.reserve-btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f76c6c;
+    width: 100%;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 18px;
+}
+
+.reserve-btn:hover {
+    background-color: #f99696;
 }
